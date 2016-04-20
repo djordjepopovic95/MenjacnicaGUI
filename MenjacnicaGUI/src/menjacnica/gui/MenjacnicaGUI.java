@@ -7,23 +7,36 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Toolkit;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.awt.event.InputEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FileChooserUI;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MenjacnicaGUI extends JFrame {
 
@@ -43,6 +56,10 @@ public class MenjacnicaGUI extends JFrame {
 	private JTextArea textAreaStatus;
 	private JScrollPane scrollPaneCenter;
 	private JTable table;
+	private JPopupMenu popupMenu;
+	private JMenuItem mntmDodajKurs;
+	private JMenuItem mntmIzbrisiKurs;
+	private JMenuItem mntmIzvrsiZamenu;
 
 	/**
 	 * Launch the application.
@@ -153,6 +170,21 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmOpen() {
 		if (mntmOpen == null) {
 			mntmOpen = new JMenuItem("Open");
+			mntmOpen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try {
+						JFileChooser fc = new JFileChooser();
+						int returnVal = fc.showOpenDialog(getContentPane());
+						if (returnVal == JFileChooser.APPROVE_OPTION){
+							File file = fc.getSelectedFile();
+							textAreaStatus.setText(textAreaStatus.getText() + "/nUcitan fajl: " + file.getAbsolutePath());
+						}
+					} catch (HeadlessException e) {
+						JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Greska",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 			mntmOpen.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 			mntmOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		}
@@ -161,6 +193,21 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmSave() {
 		if (mntmSave == null) {
 			mntmSave = new JMenuItem("Save");
+			mntmSave.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						JFileChooser fc = new JFileChooser();
+						int returnVal = fc.showSaveDialog(getContentPane());
+						if (returnVal == JFileChooser.APPROVE_OPTION){
+							File file = fc.getSelectedFile();
+							textAreaStatus.setText(textAreaStatus.getText() + "/nSacuvan fajl: " + file.getAbsolutePath());
+						}
+					} catch (HeadlessException e1) {
+						JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(), "Greska",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 			mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 			mntmSave.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		}
@@ -169,6 +216,14 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmExit() {
 		if (mntmExit == null) {
 			mntmExit = new JMenuItem("Exit");
+			mntmExit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int opcija = JOptionPane.showConfirmDialog(getContentPane(), "Da li zelite da izadjete iz programa?", "Zatvaranje programa", JOptionPane.YES_NO_CANCEL_OPTION);
+					if (opcija  == JOptionPane.YES_OPTION){
+						System.exit(0);
+					}
+				}
+			});
 			mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		}
 		return mntmExit;
@@ -176,6 +231,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmAbout() {
 		if (mntmAbout == null) {
 			mntmAbout = new JMenuItem("About");
+			mntmAbout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(getContentPane(), "Djordje Popovic \n FON, 2016.", "About", JOptionPane.PLAIN_MESSAGE);
+				}
+			});
 		}
 		return mntmAbout;
 	}
@@ -198,6 +258,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JScrollPane getScrollPaneCenter() {
 		if (scrollPaneCenter == null) {
 			scrollPaneCenter = new JScrollPane();
+			addPopup(scrollPaneCenter, getPopupMenu());
 			scrollPaneCenter.setViewportView(getTable());
 		}
 		return scrollPaneCenter;
@@ -223,5 +284,49 @@ public class MenjacnicaGUI extends JFrame {
 			table.setFillsViewportHeight(true);
 		}
 		return table;
+	}
+	private JPopupMenu getPopupMenu() {
+		if (popupMenu == null) {
+			popupMenu = new JPopupMenu();
+			popupMenu.add(getMntmDodajKurs());
+			popupMenu.add(getMntmIzbrisiKurs());
+			popupMenu.add(getMntmIzvrsiZamenu());
+		}
+		return popupMenu;
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+	private JMenuItem getMntmDodajKurs() {
+		if (mntmDodajKurs == null) {
+			mntmDodajKurs = new JMenuItem("Dodaj kurs");
+		}
+		return mntmDodajKurs;
+	}
+	private JMenuItem getMntmIzbrisiKurs() {
+		if (mntmIzbrisiKurs == null) {
+			mntmIzbrisiKurs = new JMenuItem("Izbrisi kurs");
+		}
+		return mntmIzbrisiKurs;
+	}
+	private JMenuItem getMntmIzvrsiZamenu() {
+		if (mntmIzvrsiZamenu == null) {
+			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
+		}
+		return mntmIzvrsiZamenu;
 	}
 }
