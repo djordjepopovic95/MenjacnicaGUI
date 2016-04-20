@@ -31,6 +31,9 @@ import javax.swing.plaf.FileChooserUI;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import menjacnica.gui.models.KursTableModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPopupMenu;
@@ -62,29 +65,14 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem mntmIzvrsiZamenu;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenjacnicaGUI frame = new MenjacnicaGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public MenjacnicaGUI() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MenjacnicaGUI.class.getResource("/icons/nicki-minaj-the-pinkprint-album-cover.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(MenjacnicaGUI.class.getResource("/icons/nicki-minaj-the-pinkprint-album-cover.jpg")));
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 507, 312);
 		setJMenuBar(getMenuBar_1());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,10 +87,10 @@ public class MenjacnicaGUI extends JFrame {
 		if (panelEast == null) {
 			panelEast = new JPanel();
 			GridBagLayout gbl_panelEast = new GridBagLayout();
-			gbl_panelEast.columnWidths = new int[]{83, 0};
-			gbl_panelEast.rowHeights = new int[]{23, 0, 0, 0};
-			gbl_panelEast.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-			gbl_panelEast.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_panelEast.columnWidths = new int[] { 83, 0 };
+			gbl_panelEast.rowHeights = new int[] { 23, 0, 0, 0 };
+			gbl_panelEast.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+			gbl_panelEast.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 			panelEast.setLayout(gbl_panelEast);
 			GridBagConstraints gbc_btnDodajKurs = new GridBagConstraints();
 			gbc_btnDodajKurs.insets = new Insets(0, 0, 5, 0);
@@ -122,13 +110,20 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return panelEast;
 	}
+
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
+			btnDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					GUIKontroler.prikaziDodajKursGUIProzor();
+				}
+			});
 			btnDodajKurs.setPreferredSize(new Dimension(98, 23));
 		}
 		return btnDodajKurs;
 	}
+
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
@@ -136,6 +131,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return btnIzbrisiKurs;
 	}
+
 	private JButton getBtnIzvrsiZamenu() {
 		if (btnIzvrsiZamenu == null) {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
@@ -143,6 +139,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return btnIzvrsiZamenu;
 	}
+
 	private JMenuBar getMenuBar_1() {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
@@ -151,6 +148,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return menuBar;
 	}
+
 	private JMenu getMnFile() {
 		if (mnFile == null) {
 			mnFile = new JMenu("File");
@@ -160,6 +158,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return mnFile;
 	}
+
 	private JMenu getMnHelp() {
 		if (mnHelp == null) {
 			mnHelp = new JMenu("Help");
@@ -167,87 +166,74 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return mnHelp;
 	}
+
 	private JMenuItem getMntmOpen() {
 		if (mntmOpen == null) {
 			mntmOpen = new JMenuItem("Open");
 			mntmOpen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					try {
-						JFileChooser fc = new JFileChooser();
-						int returnVal = fc.showOpenDialog(getContentPane());
-						if (returnVal == JFileChooser.APPROVE_OPTION){
-							File file = fc.getSelectedFile();
-							textAreaStatus.setText(textAreaStatus.getText() + "/nUcitan fajl: " + file.getAbsolutePath());
-						}
-					} catch (HeadlessException e) {
-						JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Greska",
-								JOptionPane.ERROR_MESSAGE);
-					}
+					GUIKontroler.ucitajIzFajla();
 				}
 			});
-			mntmOpen.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
+			mntmOpen.setIcon(new ImageIcon(
+					MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 			mntmOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		}
 		return mntmOpen;
 	}
+
 	private JMenuItem getMntmSave() {
 		if (mntmSave == null) {
 			mntmSave = new JMenuItem("Save");
 			mntmSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					try {
-						JFileChooser fc = new JFileChooser();
-						int returnVal = fc.showSaveDialog(getContentPane());
-						if (returnVal == JFileChooser.APPROVE_OPTION){
-							File file = fc.getSelectedFile();
-							textAreaStatus.setText(textAreaStatus.getText() + "/nSacuvan fajl: " + file.getAbsolutePath());
-						}
-					} catch (HeadlessException e1) {
-						JOptionPane.showMessageDialog(getContentPane(), e1.getMessage(), "Greska",
-								JOptionPane.ERROR_MESSAGE);
-					}
+					GUIKontroler.sacuvajUFajl();
 				}
 			});
 			mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-			mntmSave.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+			mntmSave.setIcon(new ImageIcon(
+					MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		}
 		return mntmSave;
 	}
+
 	private JMenuItem getMntmExit() {
 		if (mntmExit == null) {
 			mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					int opcija = JOptionPane.showConfirmDialog(getContentPane(), "Da li zelite da izadjete iz programa?", "Zatvaranje programa", JOptionPane.YES_NO_CANCEL_OPTION);
-					if (opcija  == JOptionPane.YES_OPTION){
-						System.exit(0);
-					}
+					GUIKontroler.ugasiAplikaciju();
 				}
 			});
 			mntmExit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
 		}
 		return mntmExit;
 	}
+
 	private JMenuItem getMntmAbout() {
 		if (mntmAbout == null) {
 			mntmAbout = new JMenuItem("About");
 			mntmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(getContentPane(), "Djordje Popovic \n FON, 2016.", "About", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(getContentPane(), "Djordje Popovic \nFON, 2016.", "About",
+							JOptionPane.PLAIN_MESSAGE);
 				}
 			});
 		}
 		return mntmAbout;
 	}
+
 	private JScrollPane getScrollPaneSouth() {
 		if (scrollPaneSouth == null) {
 			scrollPaneSouth = new JScrollPane();
-			scrollPaneSouth.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			scrollPaneSouth
+					.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			scrollPaneSouth.setPreferredSize(new Dimension(450, 50));
 			scrollPaneSouth.setViewportView(getTextAreaStatus());
 		}
 		return scrollPaneSouth;
 	}
+
 	private JTextArea getTextAreaStatus() {
 		if (textAreaStatus == null) {
 			textAreaStatus = new JTextArea();
@@ -255,6 +241,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return textAreaStatus;
 	}
+
 	private JScrollPane getScrollPaneCenter() {
 		if (scrollPaneCenter == null) {
 			scrollPaneCenter = new JScrollPane();
@@ -263,28 +250,16 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return scrollPaneCenter;
 	}
+
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
-			table.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni", "Naziv"
-				}
-			) {
-				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, false
-				};
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			});
-			table.getColumnModel().getColumn(1).setPreferredWidth(90);
-			table.setFillsViewportHeight(true);
+			KursTableModel model = new KursTableModel(null);
+			table.setModel(model);
 		}
 		return table;
 	}
+
 	private JPopupMenu getPopupMenu() {
 		if (popupMenu == null) {
 			popupMenu = new JPopupMenu();
@@ -294,6 +269,7 @@ public class MenjacnicaGUI extends JFrame {
 		}
 		return popupMenu;
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -301,32 +277,51 @@ public class MenjacnicaGUI extends JFrame {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
 	}
+
 	private JMenuItem getMntmDodajKurs() {
 		if (mntmDodajKurs == null) {
 			mntmDodajKurs = new JMenuItem("Dodaj kurs");
 		}
 		return mntmDodajKurs;
 	}
+
 	private JMenuItem getMntmIzbrisiKurs() {
 		if (mntmIzbrisiKurs == null) {
 			mntmIzbrisiKurs = new JMenuItem("Izbrisi kurs");
 		}
 		return mntmIzbrisiKurs;
 	}
+
 	private JMenuItem getMntmIzvrsiZamenu() {
 		if (mntmIzvrsiZamenu == null) {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
 		}
 		return mntmIzvrsiZamenu;
+	}
+
+	public String vratiStatus() {
+		return textAreaStatus.getText();
+	}
+
+	public void postaviStatus(String s) {
+		textAreaStatus.setText(s);
+	}
+	
+	public void osveziTabelu() {
+		KursTableModel model = (KursTableModel) table.getModel();
+		model.ucitajKurseve(GUIKontroler.vratiSveKusreve());
+
 	}
 }
