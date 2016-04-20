@@ -293,6 +293,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmDodajKurs() {
 		if (mntmDodajKurs == null) {
 			mntmDodajKurs = new JMenuItem("Dodaj kurs");
+			mntmDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					GUIKontroler.prikaziDodajKursGUIProzor();
+				}
+			});
 		}
 		return mntmDodajKurs;
 	}
@@ -322,6 +327,6 @@ public class MenjacnicaGUI extends JFrame {
 	public void osveziTabelu() {
 		KursTableModel model = (KursTableModel) table.getModel();
 		model.ucitajKurseve(GUIKontroler.vratiSveKusreve());
-
+		
 	}
 }

@@ -159,7 +159,7 @@ public class DodajKursGUI extends JFrame {
 			btnDodaj = new JButton("Dodaj");
 			btnDodaj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.unesiKurs(Integer.parseInt(txtSifra.getText()), txtSkraceniNaziv.getText(), txtNaziv.getText(), Double.parseDouble(txtProdajni.getText()), Double.parseDouble(txtKupovni.getText()), Double.parseDouble(txtSrednji.getText()));
+					GUIKontroler.unesiKurs(Integer.parseInt(txtSifra.getText()), txtSkraceniNaziv.getText(), txtNaziv.getText(), Double.parseDouble(txtProdajni.getText()), Double.parseDouble(txtKupovni.getText()), Double.parseDouble(txtSrednji.getText()));					
 					dispose();
 				}
 			});

@@ -48,7 +48,7 @@ public class GUIKontroler {
 			int returnVal = fc.showOpenDialog(glavniProzor.getContentPane());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "/nUcitan fajl: " + file.getAbsolutePath());
+				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nUcitan fajl: " + file.getAbsolutePath());
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), e.getMessage(), "Greska",
@@ -62,7 +62,7 @@ public class GUIKontroler {
 			int returnVal = fc.showSaveDialog(glavniProzor.getContentPane());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "/nSacuvan fajl: " + file.getAbsolutePath());
+				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nSacuvan fajl: " + file.getAbsolutePath());
 			}
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), e1.getMessage(), "Greska",
@@ -90,6 +90,8 @@ public class GUIKontroler {
 			k.setSrednji(srednji);
 			dodajKursUListu(k);
 			glavniProzor.osveziTabelu();
+			String s = "Sifra: " + sifra + "Skraceni naziv: " + skraceni + "Naziv: " + naziv + "Prodajni kurs: " + prodajni + "Kupovni kurs: " + kupovni + "Srednji kurs" + srednji;
+			glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nDodat kurs: " + s);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), "Proveri formu: " + e.getMessage(), "Greska",
