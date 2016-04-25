@@ -35,6 +35,12 @@ public class GUIKontroler {
 	public static void dodajKursUListu(Kurs k) {
 		kursevi.add(k);
 	}
+	
+	public static void izbrisiKursIzListe(Kurs k){
+		if (kursevi == null || !kursevi.contains(k)) throw new RuntimeException("Kurs ne postoji u listi ili je lista prazna.");
+		kursevi.remove(k);
+		glavniProzor.osveziTabelu();
+	}
 
 	public static void prikaziDodajKursGUIProzor() {
 		DodajKursGUI prozor = new DodajKursGUI();
@@ -48,7 +54,7 @@ public class GUIKontroler {
 			int returnVal = fc.showOpenDialog(glavniProzor.getContentPane());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nUcitan fajl: " + file.getAbsolutePath());
+				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "Ucitan fajl: " + file.getAbsolutePath() + "\n");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), e.getMessage(), "Greska",
@@ -62,7 +68,7 @@ public class GUIKontroler {
 			int returnVal = fc.showSaveDialog(glavniProzor.getContentPane());
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
-				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nSacuvan fajl: " + file.getAbsolutePath());
+				glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "Sacuvan fajl: " + file.getAbsolutePath() + "\n");
 			}
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), e1.getMessage(), "Greska",
@@ -91,7 +97,7 @@ public class GUIKontroler {
 			dodajKursUListu(k);
 			glavniProzor.osveziTabelu();
 			String s = "Sifra: " + sifra + "Skraceni naziv: " + skraceni + "Naziv: " + naziv + "Prodajni kurs: " + prodajni + "Kupovni kurs: " + kupovni + "Srednji kurs" + srednji;
-			glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "\nDodat kurs: " + s);
+			glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "Dodat kurs: " + s + "\n");
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(glavniProzor.getContentPane(), "Proveri formu: " + e.getMessage(), "Greska",
@@ -103,6 +109,9 @@ public class GUIKontroler {
 		return kursevi;
 	}
 	
-	//fali GreskaBiranjeReda
-	//fali izbrisiKnjigu
+	public static void greskaPriIzboruReda(){
+		JOptionPane.showMessageDialog(glavniProzor.getContentPane(), "Izaberite kurs za brisanje!", "Greska!",
+				JOptionPane.ERROR_MESSAGE);
+	}
+	
 }

@@ -62,4 +62,7 @@ public class KursTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
+	public Kurs getKursByIndex(int ind){
+		return kursevi.get(ind);
+	}
 }

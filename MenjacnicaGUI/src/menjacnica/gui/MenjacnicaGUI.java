@@ -32,6 +32,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import menjacnica.Kurs;
 import menjacnica.gui.models.KursTableModel;
 
 import java.awt.event.ActionListener;
@@ -127,6 +128,26 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
+			btnIzbrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					int ind = table.getSelectedRow();
+					if (ind == -1) {
+						GUIKontroler.greskaPriIzboruReda();
+					} else {
+						int opcija = JOptionPane.showConfirmDialog(null,
+								"Da li ste sigurni da zelite da izbrisete kurs?", "Poruka",
+								JOptionPane.YES_NO_OPTION);
+						if (opcija == JOptionPane.YES_OPTION) {
+							KursTableModel model = (KursTableModel) table.getModel();
+							Kurs k = model.getKursByIndex(ind);
+							GUIKontroler.izbrisiKursIzListe(k);
+							
+							JOptionPane.showInternalMessageDialog(getContentPane(), "Kurs uspesno izbrisan.");
+							postaviStatus(vratiStatus() + "Izbrisan je red sa indeksom: " + ind + "\n");
+						}
+					}
+				}
+			});
 			btnIzbrisiKurs.setPreferredSize(new Dimension(98, 23));
 		}
 		return btnIzbrisiKurs;
@@ -329,4 +350,6 @@ public class MenjacnicaGUI extends JFrame {
 		model.ucitajKurseve(GUIKontroler.vratiSveKusreve());
 		
 	}
+	
+	
 }
