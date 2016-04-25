@@ -34,7 +34,7 @@ public class IzvrsiZamenuGUI extends JFrame {
 	private JRadioButton rdbtnProdaja;
 	private JSlider slider;
 	private JButton btnIzvrsiZamenu;
-	private JButton btnOdistani;
+	private JButton btnOdustani;
 
 	/**
 	 * Launch the application.
@@ -76,7 +76,7 @@ public class IzvrsiZamenuGUI extends JFrame {
 		contentPane.add(getRdbtnProdaja());
 		contentPane.add(getSlider());
 		contentPane.add(getBtnIzvrsiZamenu());
-		contentPane.add(getBtnOdistani());
+		contentPane.add(getBtnOdustani());
 		groupButtons();
 	}
 	private JLabel getLblKupovniKurs() {
@@ -184,16 +184,16 @@ public class IzvrsiZamenuGUI extends JFrame {
 		}
 		return btnIzvrsiZamenu;
 	}
-	private JButton getBtnOdistani() {
-		if (btnOdistani == null) {
-			btnOdistani = new JButton("Odistani");
-			btnOdistani.addActionListener(new ActionListener() {
+	private JButton getBtnOdustani() {
+		if (btnOdustani == null) {
+			btnOdustani = new JButton("Odustani");
+			btnOdustani.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					//fali
 				}
 			});
-			btnOdistani.setBounds(212, 246, 100, 23);
+			btnOdustani.setBounds(212, 246, 100, 23);
 		}
-		return btnOdistani;
+		return btnOdustani;
 	}
 }
