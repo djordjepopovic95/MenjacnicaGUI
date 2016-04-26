@@ -41,6 +41,7 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ScrollPaneConstants;
 
 public class MenjacnicaGUI extends JFrame {
 
@@ -73,7 +74,7 @@ public class MenjacnicaGUI extends JFrame {
 				.getImage(MenjacnicaGUI.class.getResource("/icons/nicki-minaj-the-pinkprint-album-cover.jpg")));
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 507, 312);
+		setBounds(100, 100, 501, 294);
 		setJMenuBar(getMenuBar_1());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -252,9 +253,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JScrollPane getScrollPaneSouth() {
 		if (scrollPaneSouth == null) {
 			scrollPaneSouth = new JScrollPane();
+			scrollPaneSouth.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPaneSouth.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPaneSouth
 					.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			scrollPaneSouth.setPreferredSize(new Dimension(450, 50));
+			scrollPaneSouth.setPreferredSize(new Dimension(450, 100));
 			scrollPaneSouth.setViewportView(getTextAreaStatus());
 		}
 		return scrollPaneSouth;
@@ -263,7 +266,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JTextArea getTextAreaStatus() {
 		if (textAreaStatus == null) {
 			textAreaStatus = new JTextArea();
-			textAreaStatus.setPreferredSize(new Dimension(400, 20));
+			textAreaStatus.setPreferredSize(new Dimension(300, 20));
 		}
 		return textAreaStatus;
 	}
