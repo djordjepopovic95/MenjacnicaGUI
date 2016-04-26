@@ -114,4 +114,15 @@ public class GUIKontroler {
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
+	public static void izvrsiZamenu(Object selectedItem, String rb){
+		String sI = (String) selectedItem;
+		String s = "Valuta: " + sI + " " + "Vrsta transakcije: " + rb;
+		glavniProzor.postaviStatus(glavniProzor.vratiStatus() + s + "\n");
+	}
+	
+	public static void prikaziIzvrsiZamenuProzor(){
+		IzvrsiZamenuGUI izvrsiZamenu = new IzvrsiZamenuGUI();
+		izvrsiZamenu.setVisible(true);
+	}
+	
 }

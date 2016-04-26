@@ -156,6 +156,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzvrsiZamenu() {
 		if (btnIzvrsiZamenu == null) {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
+			btnIzvrsiZamenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					GUIKontroler.prikaziIzvrsiZamenuProzor();
+				}
+			});
 			btnIzvrsiZamenu.setPreferredSize(new Dimension(98, 23));
 		}
 		return btnIzvrsiZamenu;
