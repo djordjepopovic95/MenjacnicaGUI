@@ -96,7 +96,7 @@ public class GUIKontroler {
 			k.setSrednji(srednji);
 			dodajKursUListu(k);
 			glavniProzor.osveziTabelu();
-			String s = "Sifra: " + sifra + "Skraceni naziv: " + skraceni + "Naziv: " + naziv + "Prodajni kurs: " + prodajni + "Kupovni kurs: " + kupovni + "Srednji kurs" + srednji;
+			String s = "Sifra: " + sifra + " Skraceni naziv: " + skraceni + " Naziv: " + naziv + " Prodajni kurs: " + prodajni + " Kupovni kurs: " + kupovni + " Srednji kurs" + srednji;
 			glavniProzor.postaviStatus(glavniProzor.vratiStatus() + "Dodat kurs: " + s + "\n");
 
 		} catch (Exception e) {

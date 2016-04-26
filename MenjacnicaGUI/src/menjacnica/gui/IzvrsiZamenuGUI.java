@@ -215,7 +215,8 @@ public class IzvrsiZamenuGUI extends JFrame {
 			btnOdustani = new JButton("Odustani");
 			btnOdustani.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					// fali
+					setVisible(false);
+					dispose();
 				}
 			});
 			btnOdustani.setBounds(212, 246, 100, 23);

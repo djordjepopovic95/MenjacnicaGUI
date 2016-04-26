@@ -331,6 +331,26 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmIzbrisiKurs() {
 		if (mntmIzbrisiKurs == null) {
 			mntmIzbrisiKurs = new JMenuItem("Izbrisi kurs");
+			mntmIzbrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int ind = table.getSelectedRow();
+					if (ind == -1) {
+						GUIKontroler.greskaPriIzboruReda();
+					} else {
+						int opcija = JOptionPane.showConfirmDialog(null,
+								"Da li ste sigurni da zelite da izbrisete kurs?", "Poruka",
+								JOptionPane.YES_NO_OPTION);
+						if (opcija == JOptionPane.YES_OPTION) {
+							KursTableModel model = (KursTableModel) table.getModel();
+							Kurs k = model.getKursByIndex(ind);
+							GUIKontroler.izbrisiKursIzListe(k);
+							
+							JOptionPane.showInternalMessageDialog(getContentPane(), "Kurs uspesno izbrisan.");
+							postaviStatus(vratiStatus() + "Izbrisan je red sa indeksom: " + ind + "\n");
+						}
+					}
+				}
+			});
 		}
 		return mntmIzbrisiKurs;
 	}
@@ -338,6 +358,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmIzvrsiZamenu() {
 		if (mntmIzvrsiZamenu == null) {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
+			mntmIzvrsiZamenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					GUIKontroler.prikaziIzvrsiZamenuProzor();
+				}
+			});
 		}
 		return mntmIzvrsiZamenu;
 	}
