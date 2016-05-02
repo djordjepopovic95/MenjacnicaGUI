@@ -42,6 +42,10 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenjacnicaGUI extends JFrame {
 
@@ -70,10 +74,19 @@ public class MenjacnicaGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MenjacnicaGUI() {
+		setMinimumSize(new Dimension(700, 500));
+		setSize(new Dimension(563, 349));
+		setPreferredSize(new Dimension(1200, 700));
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				GUIKontroler.ugasiAplikaciju();
+			}
+		});
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(MenjacnicaGUI.class.getResource("/icons/nicki-minaj-the-pinkprint-album-cover.jpg")));
 		setTitle("Menjacnica");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 501, 294);
 		setJMenuBar(getMenuBar_1());
 		contentPane = new JPanel();
@@ -88,6 +101,8 @@ public class MenjacnicaGUI extends JFrame {
 	private JPanel getPanelEast() {
 		if (panelEast == null) {
 			panelEast = new JPanel();
+			panelEast.setPreferredSize(new Dimension(120, 10));
+			panelEast.setMinimumSize(new Dimension(50, 10));
 			GridBagLayout gbl_panelEast = new GridBagLayout();
 			gbl_panelEast.columnWidths = new int[] { 83, 0 };
 			gbl_panelEast.rowHeights = new int[] { 23, 0, 0, 0 };
@@ -121,7 +136,7 @@ public class MenjacnicaGUI extends JFrame {
 					GUIKontroler.prikaziDodajKursGUIProzor();
 				}
 			});
-			btnDodajKurs.setPreferredSize(new Dimension(98, 23));
+			btnDodajKurs.setPreferredSize(new Dimension(120, 23));
 		}
 		return btnDodajKurs;
 	}
@@ -149,7 +164,7 @@ public class MenjacnicaGUI extends JFrame {
 					}
 				}
 			});
-			btnIzbrisiKurs.setPreferredSize(new Dimension(98, 23));
+			btnIzbrisiKurs.setPreferredSize(new Dimension(120, 23));
 		}
 		return btnIzbrisiKurs;
 	}
@@ -162,7 +177,7 @@ public class MenjacnicaGUI extends JFrame {
 					GUIKontroler.prikaziIzvrsiZamenuProzor();
 				}
 			});
-			btnIzvrsiZamenu.setPreferredSize(new Dimension(98, 23));
+			btnIzvrsiZamenu.setPreferredSize(new Dimension(120, 23));
 		}
 		return btnIzvrsiZamenu;
 	}
@@ -253,10 +268,8 @@ public class MenjacnicaGUI extends JFrame {
 	private JScrollPane getScrollPaneSouth() {
 		if (scrollPaneSouth == null) {
 			scrollPaneSouth = new JScrollPane();
-			scrollPaneSouth.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			scrollPaneSouth.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 			scrollPaneSouth
-					.setBorder(new TitledBorder(null, "Status", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+					.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "STATUS", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			scrollPaneSouth.setPreferredSize(new Dimension(450, 100));
 			scrollPaneSouth.setViewportView(getTextAreaStatus());
 		}

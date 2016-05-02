@@ -202,7 +202,7 @@ public class IzvrsiZamenuGUI extends JFrame {
 					if (getRdbtnProdaja().isSelected()) {
 						rb = "Prodaja";
 					}
-					GUIKontroler.izvrsiZamenu(getComboBox().getSelectedItem(), rb);;
+					GUIKontroler.izvrsiZamenu(getComboBox().getSelectedItem(), rb, getTxtIznos().getText());
 				}
 			});
 			btnIzvrsiZamenu.setBounds(10, 246, 107, 23);
